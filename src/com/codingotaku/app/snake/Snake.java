@@ -22,13 +22,17 @@ public class Snake {
 		this.yOffset = yOffset;
 	}
 
+	boolean isCollided(Rectangle object) {
+		Rectangle head = cells.get(0);
+		return head.contains(object.getX(),object.getY());
+	}
 	boolean isGameOver() {
 		Rectangle head = cells.get(0);
 		if (!playArea.intersects(head.getBoundsInLocal())) {
 			return true;
 		}
 		for (int i = 1; i < cells.size(); i++) {
-			if (head.intersects(cells.get(i).getBoundsInLocal())) {
+			if (isCollided(cells.get(i))) {
 				return true;
 			}
 		}
@@ -37,7 +41,7 @@ public class Snake {
 
 	boolean eat(Rectangle food) {
 		Rectangle head = cells.get(0);
-		if(!head.intersects(food.getBoundsInLocal())) {
+		if(!isCollided(food)) {
 			return false;
 		}
 		cells.add(new Rectangle(head.getX(), head.getY(),head.getWidth(),head.getHeight()));

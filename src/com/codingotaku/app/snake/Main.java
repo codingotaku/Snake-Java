@@ -99,10 +99,13 @@ public class Main extends Application {
 	}
 
 	private void newFood() {
-		food.setX((random.nextInt((int) playArea.getWidth()/size) + 1) * size);
-		food.setY((random.nextInt((int) playArea.getWidth()/size) + 1) * size);
-		System.out.println(food.getX());
-		System.out.println(food.getY());
+		int minX = (int) playArea.getX();
+		int minY = (int) playArea.getY();
+		int maxX = (int) playArea.getWidth();
+		int maxY = (int) playArea.getHeight();
+
+		food.setX(((random.nextInt(maxX - minX) + minX) / size) * size);
+		food.setY(((random.nextInt(maxY - minY) + minY) / size) * size);
 		food.setWidth(size);
 		food.setHeight(size);
 	}
@@ -146,7 +149,8 @@ public class Main extends Application {
 		gc.setFill(Color.grayRgb(32));
 		gc.fillRect(0, 0, 500, 500);
 		gc.setStroke(Color.WHITESMOKE);
-		gc.strokeRect(gameX - size, gameY - size, gameW + size * 2, gameH + size * 2);
+		gc.strokeRect(playArea.getX() - size, playArea.getY() - size, playArea.getWidth() + size * 2,
+				playArea.getHeight() + size * 2);
 		gc.strokeText(String.format("Score : %d", score), 10, 470);
 		gc.strokeText(String.format("High Score : %d", highScore), 200, 470);
 		gc.strokeText(String.format("FPS : %.0f", getFPS()), 420, 470);
